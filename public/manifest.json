@@ -1,0 +1,16 @@
+{
+  "name": "EngineerOS",
+  "short_name": "EngineerOS",
+  "description": "Personal engineering command center",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}
