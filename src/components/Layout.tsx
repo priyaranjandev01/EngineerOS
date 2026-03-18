@@ -1,11 +1,12 @@
-import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X,
+  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X, Palette,
 } from 'lucide-react';
 import { QuickEntry } from './QuickEntry';
 import { GlobalSearch } from './GlobalSearch';
+import { useTheme, themes } from '@/hooks/useTheme';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -25,6 +26,8 @@ export function Layout({ children, onRefresh }: LayoutProps) {
   const [quickEntryOpen, setQuickEntryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -87,6 +90,31 @@ export function Layout({ children, onRefresh }: LayoutProps) {
             Quick Entry
             <kbd className="ml-auto text-[10px] bg-muted px-1.5 py-0.5 rounded font-mono">⌘K</kbd>
           </button>
+          <div className="relative">
+            <button
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-surface-hover w-full transition-colors duration-150"
+            >
+              <Palette className="h-4 w-4" />
+              Theme
+            </button>
+            {themeOpen && (
+              <div className="absolute bottom-full left-0 mb-1 w-full bg-card border border-border rounded-md p-1.5 shadow-lg space-y-0.5">
+                {themes.map(t => (
+                  <button
+                    key={t.id}
+                    onClick={() => { setTheme(t.id); setThemeOpen(false); }}
+                    className={`flex items-center gap-2 w-full px-3 py-1.5 rounded text-sm transition-colors ${
+                      theme === t.id ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-surface-hover'
+                    }`}
+                  >
+                    <span className="h-3 w-3 rounded-full shrink-0" style={{ background: t.color }} />
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </aside>
 
