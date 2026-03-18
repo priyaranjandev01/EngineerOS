@@ -26,6 +26,8 @@ export function Layout({ children, onRefresh }: LayoutProps) {
   const [quickEntryOpen, setQuickEntryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
