@@ -5,7 +5,9 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* Theme: Midnight (default) */
+  :root,
+  [data-theme="midnight"] {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
@@ -59,6 +61,159 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     font-variant-numeric: tabular-nums;
   }
+
+  /* Theme: Emerald */
+  [data-theme="emerald"] {
+    --background: 160 20% 4%;
+    --foreground: 150 10% 95%;
+
+    --card: 160 15% 7%;
+    --card-foreground: 150 10% 95%;
+
+    --popover: 160 15% 7%;
+    --popover-foreground: 150 10% 95%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 160 10% 12%;
+    --secondary-foreground: 150 10% 90%;
+
+    --muted: 160 8% 15%;
+    --muted-foreground: 160 8% 60%;
+
+    --accent: 160 8% 15%;
+    --accent-foreground: 150 10% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    --border: 160 10% 80% / 0.08;
+    --input: 160 10% 15%;
+    --ring: 160 84% 39%;
+
+    --sidebar-background: 160 20% 5%;
+    --sidebar-foreground: 160 8% 60%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 10% 10%;
+    --sidebar-accent-foreground: 150 10% 95%;
+    --sidebar-border: 160 10% 80% / 0.08;
+    --sidebar-ring: 160 84% 39%;
+
+    --surface: 160 15% 7%;
+    --surface-hover: 160 12% 10%;
+
+    --shadow-card: 0 0 0 1px rgba(255,255,255,0.04), 0 1px 3px rgba(0,0,0,0.5), 0 10px 15px -3px rgba(0,0,0,0.4);
+  }
+
+  /* Theme: Sunset */
+  [data-theme="sunset"] {
+    --background: 15 20% 4%;
+    --foreground: 30 20% 95%;
+
+    --card: 15 15% 7%;
+    --card-foreground: 30 20% 95%;
+
+    --popover: 15 15% 7%;
+    --popover-foreground: 30 20% 95%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 15 10% 12%;
+    --secondary-foreground: 30 10% 90%;
+
+    --muted: 15 8% 15%;
+    --muted-foreground: 15 8% 60%;
+
+    --accent: 15 8% 15%;
+    --accent-foreground: 30 20% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    --border: 15 10% 80% / 0.08;
+    --input: 15 10% 15%;
+    --ring: 25 95% 53%;
+
+    --sidebar-background: 15 20% 5%;
+    --sidebar-foreground: 15 8% 60%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 15 10% 10%;
+    --sidebar-accent-foreground: 30 20% 95%;
+    --sidebar-border: 15 10% 80% / 0.08;
+    --sidebar-ring: 25 95% 53%;
+
+    --surface: 15 15% 7%;
+    --surface-hover: 15 12% 10%;
+
+    --shadow-card: 0 0 0 1px rgba(255,255,255,0.04), 0 1px 3px rgba(0,0,0,0.5), 0 10px 15px -3px rgba(0,0,0,0.4);
+  }
+
+  /* Theme: Lavender */
+  [data-theme="lavender"] {
+    --background: 270 15% 5%;
+    --foreground: 270 10% 95%;
+
+    --card: 270 12% 8%;
+    --card-foreground: 270 10% 95%;
+
+    --popover: 270 12% 8%;
+    --popover-foreground: 270 10% 95%;
+
+    --primary: 270 76% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 8% 13%;
+    --secondary-foreground: 270 10% 90%;
+
+    --muted: 270 6% 16%;
+    --muted-foreground: 270 6% 60%;
+
+    --accent: 270 6% 16%;
+    --accent-foreground: 270 10% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    --border: 270 8% 80% / 0.08;
+    --input: 270 8% 15%;
+    --ring: 270 76% 62%;
+
+    --sidebar-background: 270 15% 6%;
+    --sidebar-foreground: 270 6% 60%;
+    --sidebar-primary: 270 76% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 8% 11%;
+    --sidebar-accent-foreground: 270 10% 95%;
+    --sidebar-border: 270 8% 80% / 0.08;
+    --sidebar-ring: 270 76% 62%;
+
+    --surface: 270 12% 8%;
+    --surface-hover: 270 10% 11%;
+
+    --shadow-card: 0 0 0 1px rgba(255,255,255,0.04), 0 1px 3px rgba(0,0,0,0.5), 0 10px 15px -3px rgba(0,0,0,0.4);
+  }
 }
 
 @layer base {
@@ -82,11 +237,11 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: hsl(240 5% 20%);
+    background: hsl(var(--muted));
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(240 5% 30%);
+    background: hsl(var(--muted-foreground));
   }
 }
 

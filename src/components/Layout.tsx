@@ -1,11 +1,12 @@
-import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X,
+  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X, Palette,
 } from 'lucide-react';
 import { QuickEntry } from './QuickEntry';
 import { GlobalSearch } from './GlobalSearch';
+import { useTheme, themes } from '@/hooks/useTheme';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
