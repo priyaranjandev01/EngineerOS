@@ -4,6 +4,7 @@ import { Plus, Trash2, ChevronDown, ChevronUp, History, Maximize2 } from 'lucide
 import { DB } from '@/lib/storage';
 import { getDateStr } from '@/lib/score';
 import type { DailyMission, TaskStatus } from '@/lib/types';
+import { NotepadModal } from './NotepadModal';
 import { toast } from 'sonner';
 
 interface Props {
