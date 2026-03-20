@@ -37,28 +37,6 @@ function StatusBadge({ status, onChange }: { status: TaskStatus; onChange: (s: T
   );
 }
 
-function NotepadModal({ notes, onChange, onClose, readOnly }: { notes: string; onChange: (v: string) => void; onClose: () => void; readOnly: boolean }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-2xl mx-4 bg-card border border-border rounded-lg shadow-xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-          <span className="text-sm font-medium text-foreground">Mission Notes</span>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground p-1 transition-colors">
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-        <textarea
-          value={notes}
-          onChange={e => onChange(e.target.value)}
-          placeholder="Write your notes here..."
-          readOnly={readOnly}
-          autoFocus
-          className="w-full h-80 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/50 p-4 outline-none resize-none font-mono leading-relaxed"
-        />
-      </div>
-    </div>
-  );
-}
 
 function MissionCard({ m, today, expanded, onToggleExpand, onUpdate, onDelete, index }: {
   m: DailyMission;
