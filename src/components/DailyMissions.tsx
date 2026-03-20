@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Trash2, ChevronDown, ChevronUp, History } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronUp, History, Maximize2, X } from 'lucide-react';
 import { DB } from '@/lib/storage';
 import { getDateStr } from '@/lib/score';
 import type { DailyMission, TaskStatus } from '@/lib/types';
