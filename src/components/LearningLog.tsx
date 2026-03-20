@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronUp, Check, Maximize2 } from 'lucide-react';
 import { DB } from '@/lib/storage';
 import type { Learning } from '@/lib/types';
+import { NotepadModal } from './NotepadModal';
 import { toast } from 'sonner';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export function LearningLog({ learnings, onRefresh }: Props) {
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [notepad, setNotepad] = useState<{ id: string; field: string; title: string } | null>(null);
 
   const create = async () => {
     await DB.learnings.save({
@@ -35,6 +37,8 @@ export function LearningLog({ learnings, onRefresh }: Props) {
     toast.success('Learning deleted');
     onRefresh();
   };
+
+  const notepadItem = notepad ? learnings.find(l => l.id === notepad.id) : null;
 
   return (
     <div className="space-y-4">
@@ -109,23 +113,33 @@ export function LearningLog({ learnings, onRefresh }: Props) {
                 <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
                   <div className="px-4 pb-4 border-t border-border pt-3 space-y-3">
                     <div>
-                      <label className="text-label block mb-1">Description</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Description</label>
+                        <button onClick={() => setNotepad({ id: l.id, field: 'description', title: 'Description' })} className="text-muted-foreground hover:text-primary transition-colors ml-1">
+                          <Maximize2 className="h-3 w-3" />
+                        </button>
+                      </div>
                       <textarea
                         value={l.description}
                         onChange={e => update(l.id, { description: e.target.value })}
                         placeholder="What did you learn?"
                         rows={3}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
                     <div>
-                      <label className="text-label block mb-1">Impact</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Impact</label>
+                        <button onClick={() => setNotepad({ id: l.id, field: 'impact', title: 'Impact' })} className="text-muted-foreground hover:text-primary transition-colors ml-1">
+                          <Maximize2 className="h-3 w-3" />
+                        </button>
+                      </div>
                       <textarea
                         value={l.impact}
                         onChange={e => update(l.id, { impact: e.target.value })}
                         placeholder="How did this impact your work?"
                         rows={2}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
                   </div>
@@ -135,6 +149,15 @@ export function LearningLog({ learnings, onRefresh }: Props) {
           </motion.div>
         );
       })}
+
+      {notepad && notepadItem && (
+        <NotepadModal
+          title={notepad.title}
+          value={(notepadItem as any)[notepad.field] || ''}
+          onChange={v => update(notepad.id, { [notepad.field]: v })}
+          onClose={() => setNotepad(null)}
+        />
+      )}
     </div>
   );
 }

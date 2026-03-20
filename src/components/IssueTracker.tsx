@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronUp, Check, Maximize2 } from 'lucide-react';
 import { DB } from '@/lib/storage';
 import type { Issue, Severity } from '@/lib/types';
+import { NotepadModal } from './NotepadModal';
 import { toast } from 'sonner';
 
 interface Props {
@@ -28,6 +29,7 @@ export function IssueTracker({ issues, onRefresh }: Props) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'open' | 'resolved'>('all');
   const [severityFilter, setSeverityFilter] = useState<Severity | 'all'>('all');
+  const [notepad, setNotepad] = useState<{ id: string; field: string; title: string } | null>(null);
 
   const filtered = issues.filter(i => {
     if (filter === 'open' && i.resolved) return false;
@@ -59,6 +61,20 @@ export function IssueTracker({ issues, onRefresh }: Props) {
     toast.success('Issue deleted');
     onRefresh();
   };
+
+  const notepadIssue = notepad ? issues.find(i => i.id === notepad.id) : null;
+
+  function ExpandButton({ field, label, id }: { field: string; label: string; id: string }) {
+    return (
+      <button
+        onClick={() => setNotepad({ id, field, title: label })}
+        className="text-muted-foreground hover:text-primary transition-colors ml-1"
+        title="Open in notepad"
+      >
+        <Maximize2 className="h-3 w-3" />
+      </button>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -173,7 +189,7 @@ export function IssueTracker({ issues, onRefresh }: Props) {
                         <select
                           value={issue.severity}
                           onChange={e => update(issue.id, { severity: e.target.value as Severity })}
-                          className="w-full bg-surface text-sm text-foreground rounded-md p-2 outline-none border border-border"
+                          className="w-full bg-muted/50 text-sm text-foreground rounded-md p-2 outline-none border border-border/50 focus:border-primary/40"
                         >
                           <option value="low">Low</option>
                           <option value="medium">Medium</option>
@@ -187,42 +203,54 @@ export function IssueTracker({ issues, onRefresh }: Props) {
                           value={issue.affectedModules}
                           onChange={e => update(issue.id, { affectedModules: e.target.value })}
                           placeholder="auth, api, ui"
-                          className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none"
+                          className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="text-label block mb-1">Description</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Description</label>
+                        <ExpandButton field="description" label="Description" id={issue.id} />
+                      </div>
                       <textarea
                         value={issue.description}
                         onChange={e => update(issue.id, { description: e.target.value })}
                         placeholder="Describe the issue..."
                         rows={2}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
                     <div>
-                      <label className="text-label block mb-1">Root Cause</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Root Cause</label>
+                        <ExpandButton field="rootCause" label="Root Cause" id={issue.id} />
+                      </div>
                       <textarea
                         value={issue.rootCause}
                         onChange={e => update(issue.id, { rootCause: e.target.value })}
                         placeholder="What caused this?"
                         rows={2}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
                     <div>
-                      <label className="text-label block mb-1">Fix Applied</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Fix Applied</label>
+                        <ExpandButton field="fixApplied" label="Fix Applied" id={issue.id} />
+                      </div>
                       <textarea
                         value={issue.fixApplied}
                         onChange={e => update(issue.id, { fixApplied: e.target.value })}
                         placeholder="What fix was applied?"
                         rows={2}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
-                    <div className="rounded-md bg-success/5 p-3">
-                      <label className="text-label block mb-1 text-success">Prevention</label>
+                    <div className="rounded-md bg-success/5 border border-success/10 p-3">
+                      <div className="flex items-center mb-1">
+                        <label className="text-label text-success">Prevention</label>
+                        <ExpandButton field="prevention" label="Prevention" id={issue.id} />
+                      </div>
                       <textarea
                         value={issue.prevention}
                         onChange={e => update(issue.id, { prevention: e.target.value })}
@@ -238,6 +266,15 @@ export function IssueTracker({ issues, onRefresh }: Props) {
           </motion.div>
         );
       })}
+
+      {notepad && notepadIssue && (
+        <NotepadModal
+          title={notepad.title}
+          value={(notepadIssue as any)[notepad.field] || ''}
+          onChange={v => update(notepad.id, { [notepad.field]: v })}
+          onClose={() => setNotepad(null)}
+        />
+      )}
     </div>
   );
 }
