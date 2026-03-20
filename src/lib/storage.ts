@@ -1,5 +1,5 @@
 import { openDB, type IDBPDatabase } from 'idb';
-import type { EngineerEntity, DailyMission, Issue, Learning, Improvement } from './types';
+import type { EngineerEntity, DailyMission, Issue, Learning, Improvement, StickyNote } from './types';
 
 const DB_NAME = 'engineeros';
 const DB_VERSION = 1;
