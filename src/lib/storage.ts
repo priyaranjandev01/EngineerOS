@@ -2,13 +2,14 @@ import { openDB, type IDBPDatabase } from 'idb';
 import type { EngineerEntity, DailyMission, Issue, Learning, Improvement, StickyNote } from './types';
 
 const DB_NAME = 'engineeros';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 const STORES = {
   missions: 'missions',
   issues: 'issues',
   learnings: 'learnings',
   improvements: 'improvements',
+  stickyNotes: 'stickyNotes',
 } as const;
 
 type StoreName = typeof STORES[keyof typeof STORES];
