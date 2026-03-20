@@ -46,4 +46,11 @@ export interface Improvement extends EngineerEntity {
   impact: string;
 }
 
-export type EntityType = 'mission' | 'issue' | 'learning' | 'improvement';
+export interface StickyNote extends EngineerEntity {
+  title: string;
+  content: string;
+  color: string;
+  pinned: boolean;
+}
+
+export type EntityType = 'mission' | 'issue' | 'learning' | 'improvement' | 'stickyNote';

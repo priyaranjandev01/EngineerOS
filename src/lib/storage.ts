@@ -108,4 +108,10 @@ export const DB = {
     save: (data: Partial<Improvement>) => DB.save<Improvement>('improvements', data),
     delete: (id: string) => DB.delete('improvements', id),
   },
+  stickyNotes: {
+    getAll: () => DB.getAll<StickyNote>('stickyNotes'),
+    get: (id: string) => DB.get<StickyNote>('stickyNotes', id),
+    save: (data: Partial<StickyNote>) => DB.save<StickyNote>('stickyNotes', data),
+    delete: (id: string) => DB.delete('stickyNotes', id),
+  },
 };
