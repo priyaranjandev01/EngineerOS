@@ -127,7 +127,8 @@ function MissionCard({ m, today, expanded, onToggleExpand, onUpdate, onDelete, i
 
       {notepadOpen && (
         <NotepadModal
-          notes={m.notes}
+          title="Mission Notes"
+          value={m.notes}
           onChange={v => onUpdate(m.id, { notes: v })}
           onClose={() => setNotepadOpen(false)}
           readOnly={!isToday}
