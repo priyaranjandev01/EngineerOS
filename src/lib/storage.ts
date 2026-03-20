@@ -1,14 +1,15 @@
 import { openDB, type IDBPDatabase } from 'idb';
-import type { EngineerEntity, DailyMission, Issue, Learning, Improvement } from './types';
+import type { EngineerEntity, DailyMission, Issue, Learning, Improvement, StickyNote } from './types';
 
 const DB_NAME = 'engineeros';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 const STORES = {
   missions: 'missions',
   issues: 'issues',
   learnings: 'learnings',
   improvements: 'improvements',
+  stickyNotes: 'stickyNotes',
 } as const;
 
 type StoreName = typeof STORES[keyof typeof STORES];
@@ -106,5 +107,11 @@ export const DB = {
     get: (id: string) => DB.get<Improvement>('improvements', id),
     save: (data: Partial<Improvement>) => DB.save<Improvement>('improvements', data),
     delete: (id: string) => DB.delete('improvements', id),
+  },
+  stickyNotes: {
+    getAll: () => DB.getAll<StickyNote>('stickyNotes'),
+    get: (id: string) => DB.get<StickyNote>('stickyNotes', id),
+    save: (data: Partial<StickyNote>) => DB.save<StickyNote>('stickyNotes', data),
+    delete: (id: string) => DB.delete('stickyNotes', id),
   },
 };

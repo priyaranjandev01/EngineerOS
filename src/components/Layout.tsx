@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X, Palette,
+  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X, Palette, StickyNote,
 } from 'lucide-react';
 import { QuickEntry } from './QuickEntry';
 import { GlobalSearch } from './GlobalSearch';
@@ -14,6 +14,7 @@ const navItems = [
   { path: '/issues', label: 'Issues', icon: Bug },
   { path: '/learnings', label: 'Learnings', icon: BookOpen },
   { path: '/improvements', label: 'Improvements', icon: Zap },
+  { path: '/notes', label: 'Sticky Notes', icon: StickyNote },
 ];
 
 interface LayoutProps {

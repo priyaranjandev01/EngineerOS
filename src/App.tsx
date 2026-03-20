@@ -9,12 +9,13 @@ import { DailyMissions } from "@/components/DailyMissions";
 import { IssueTracker } from "@/components/IssueTracker";
 import { LearningLog } from "@/components/LearningLog";
 import { ImprovementTracker } from "@/components/ImprovementTracker";
+import { StickyNotes } from "@/components/StickyNotes";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
 
 function AppContent() {
-  const { missions, issues, learnings, improvements, loading, refresh } = useData();
+  const { missions, issues, learnings, improvements, stickyNotes, loading, refresh } = useData();
 
   if (loading) {
     return (
@@ -32,6 +33,7 @@ function AppContent() {
         <Route path="/issues" element={<IssueTracker issues={issues} onRefresh={refresh} />} />
         <Route path="/learnings" element={<LearningLog learnings={learnings} onRefresh={refresh} />} />
         <Route path="/improvements" element={<ImprovementTracker improvements={improvements} onRefresh={refresh} />} />
+        <Route path="/notes" element={<StickyNotes notes={stickyNotes} onRefresh={refresh} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

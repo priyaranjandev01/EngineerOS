@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Plus, Trash2, ChevronDown, ChevronUp, Maximize2 } from 'lucide-react';
 import { DB } from '@/lib/storage';
 import type { Improvement, ImprovementType } from '@/lib/types';
+import { NotepadModal } from './NotepadModal';
 import { toast } from 'sonner';
 
 interface Props {
@@ -20,6 +21,7 @@ const typeLabels: Record<ImprovementType, string> = {
 export function ImprovementTracker({ improvements, onRefresh }: Props) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [typeFilter, setTypeFilter] = useState<ImprovementType | 'all'>('all');
+  const [notepad, setNotepad] = useState<{ id: string; field: string; title: string } | null>(null);
 
   const filtered = typeFilter === 'all' ? improvements : improvements.filter(i => i.type === typeFilter);
 
@@ -46,6 +48,8 @@ export function ImprovementTracker({ improvements, onRefresh }: Props) {
     toast.success('Improvement deleted');
     onRefresh();
   };
+
+  const notepadItem = notepad ? improvements.find(i => i.id === notepad.id) : null;
 
   return (
     <div className="space-y-4">
@@ -130,7 +134,7 @@ export function ImprovementTracker({ improvements, onRefresh }: Props) {
                       <select
                         value={imp.type}
                         onChange={e => update(imp.id, { type: e.target.value as ImprovementType })}
-                        className="w-full bg-surface text-sm text-foreground rounded-md p-2 outline-none border border-border"
+                        className="w-full bg-muted/50 text-sm text-foreground rounded-md p-2 outline-none border border-border/50 focus:border-primary/40"
                       >
                         {Object.entries(typeLabels).map(([k, v]) => (
                           <option key={k} value={k}>{v}</option>
@@ -138,45 +142,57 @@ export function ImprovementTracker({ improvements, onRefresh }: Props) {
                       </select>
                     </div>
                     <div>
-                      <label className="text-label block mb-1">Description</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Description</label>
+                        <button onClick={() => setNotepad({ id: imp.id, field: 'description', title: 'Description' })} className="text-muted-foreground hover:text-primary transition-colors ml-1"><Maximize2 className="h-3 w-3" /></button>
+                      </div>
                       <textarea
                         value={imp.description}
                         onChange={e => update(imp.id, { description: e.target.value })}
                         placeholder="What was improved?"
                         rows={2}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-label block mb-1">Before</label>
+                        <div className="flex items-center mb-1">
+                          <label className="text-label">Before</label>
+                          <button onClick={() => setNotepad({ id: imp.id, field: 'beforeState', title: 'Before State' })} className="text-muted-foreground hover:text-primary transition-colors ml-1"><Maximize2 className="h-3 w-3" /></button>
+                        </div>
                         <textarea
                           value={imp.beforeState}
                           onChange={e => update(imp.id, { beforeState: e.target.value })}
                           placeholder="latency: 340ms"
                           rows={2}
-                          className="w-full bg-surface text-sm text-foreground font-mono placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                          className="w-full bg-muted/50 text-sm text-foreground font-mono placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                         />
                       </div>
                       <div>
-                        <label className="text-label block mb-1">After</label>
+                        <div className="flex items-center mb-1">
+                          <label className="text-label">After</label>
+                          <button onClick={() => setNotepad({ id: imp.id, field: 'afterState', title: 'After State' })} className="text-muted-foreground hover:text-primary transition-colors ml-1"><Maximize2 className="h-3 w-3" /></button>
+                        </div>
                         <textarea
                           value={imp.afterState}
                           onChange={e => update(imp.id, { afterState: e.target.value })}
                           placeholder="latency: 200ms"
                           rows={2}
-                          className="w-full bg-surface text-sm text-foreground font-mono placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                          className="w-full bg-muted/50 text-sm text-foreground font-mono placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="text-label block mb-1">Impact</label>
+                      <div className="flex items-center mb-1">
+                        <label className="text-label">Impact</label>
+                        <button onClick={() => setNotepad({ id: imp.id, field: 'impact', title: 'Impact' })} className="text-muted-foreground hover:text-primary transition-colors ml-1"><Maximize2 className="h-3 w-3" /></button>
+                      </div>
                       <textarea
                         value={imp.impact}
                         onChange={e => update(imp.id, { impact: e.target.value })}
                         placeholder="latency: -140ms"
                         rows={2}
-                        className="w-full bg-surface text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none resize-none"
+                        className="w-full bg-muted/50 text-sm text-foreground placeholder:text-muted-foreground/50 rounded-md p-2 outline-none border border-border/50 focus:border-primary/40 resize-none"
                       />
                     </div>
                   </div>
@@ -186,6 +202,15 @@ export function ImprovementTracker({ improvements, onRefresh }: Props) {
           </motion.div>
         );
       })}
+
+      {notepad && notepadItem && (
+        <NotepadModal
+          title={notepad.title}
+          value={(notepadItem as any)[notepad.field] || ''}
+          onChange={v => update(notepad.id, { [notepad.field]: v })}
+          onClose={() => setNotepad(null)}
+        />
+      )}
     </div>
   );
 }
