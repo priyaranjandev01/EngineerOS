@@ -10,6 +10,7 @@ import { IssueTracker } from "@/components/IssueTracker";
 import { LearningLog } from "@/components/LearningLog";
 import { ImprovementTracker } from "@/components/ImprovementTracker";
 import { StickyNotes } from "@/components/StickyNotes";
+import { Whiteboard } from "@/components/Whiteboard";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
