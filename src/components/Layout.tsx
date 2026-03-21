@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X, Palette, StickyNote,
+  LayoutDashboard, Target, Bug, BookOpen, Zap, Search, Command, Menu, X, Palette, StickyNote, PenTool,
 } from 'lucide-react';
 import { QuickEntry } from './QuickEntry';
 import { GlobalSearch } from './GlobalSearch';
