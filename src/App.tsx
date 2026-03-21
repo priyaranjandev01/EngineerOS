@@ -35,6 +35,7 @@ function AppContent() {
         <Route path="/learnings" element={<LearningLog learnings={learnings} onRefresh={refresh} />} />
         <Route path="/improvements" element={<ImprovementTracker improvements={improvements} onRefresh={refresh} />} />
         <Route path="/notes" element={<StickyNotes notes={stickyNotes} onRefresh={refresh} />} />
+        <Route path="/whiteboard" element={<Whiteboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

@@ -15,6 +15,7 @@ const navItems = [
   { path: '/learnings', label: 'Learnings', icon: BookOpen },
   { path: '/improvements', label: 'Improvements', icon: Zap },
   { path: '/notes', label: 'Sticky Notes', icon: StickyNote },
+  { path: '/whiteboard', label: 'Whiteboard', icon: PenTool },
 ];
 
 interface LayoutProps {
